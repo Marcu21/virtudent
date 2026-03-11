@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { sendMessage, diagnose, getSession } from "../api";
+import { sendMessage, diagnose, getSession } from "../api.js";
 
 export default function ChatPage() {
   const { sessionId } = useParams();

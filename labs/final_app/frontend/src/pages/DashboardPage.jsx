@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createSession, listSessions, getStats } from "../api";
+import { createSession, listSessions, getStats } from "../api.js";
 
 import StatsCharts from "../components/StatsCharts.jsx";
 import SessionRow from "../components/SessionRow.jsx";
