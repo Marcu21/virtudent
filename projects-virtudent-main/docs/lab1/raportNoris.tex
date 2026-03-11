@@ -1,0 +1,220 @@
+%latex model.tex
+%bibtex model
+%latex model.tex
+%latex model.tex
+%pdflatex model.tex
+
+%se poate lucra si online (de ex www.overleaf.com)
+
+
+\documentclass[runningheads,a4paper,11pt]{report}
+
+\usepackage{algorithmic}
+\usepackage{algorithm} 
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{comment} 
+\usepackage{epsfig} 
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{geometry} 
+\usepackage{graphicx}
+\usepackage[colorlinks]{hyperref} 
+\usepackage[latin1]{inputenc}
+\usepackage{multicol}
+\usepackage{multirow} 
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+\geometry{a4paper,top=3cm,left=2cm,right=2cm,bottom=3cm}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{Dentar Chatbot}
+\fancyhead[RE,LO]{Dinti de lapte}
+\fancyfoot[RE,LO]{MIRPR 2025-2026}
+\fancyfoot[LE,RO]{\thepage}
+
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{lime}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{%
+  \color{lime}\leaders\hrule height \footrulewidth\hfill}}
+
+\hypersetup{
+pdftitle={artTitle},
+pdfauthor={name},
+pdfkeywords={pdf, latex, tex, ps2pdf, dvipdfm, pdflatex},
+bookmarksnumbered,
+pdfstartview={FitH},
+urlcolor=cyan,
+colorlinks=true,
+linkcolor=red,
+citecolor=green,
+}
+% \pagestyle{plain}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\linespread{1}
+
+% \pagestyle{myheadings}
+
+\makeindex
+
+
+\begin{document}
+
+\begin{titlepage}
+\sloppy
+
+\begin{center}
+BABE\c S BOLYAI UNIVERSITY, CLUJ NAPOCA, ROM\^ ANIA
+
+FACULTY OF MATHEMATICS AND COMPUTER SCIENCE
+
+\vspace{6cm}
+
+\Huge \textbf{Dentar Chatbot}
+
+\vspace{1cm}
+
+\normalsize -- MIRPR report --
+
+\end{center}
+
+
+\vspace{5cm}
+
+\begin{flushright}
+\Large{\textbf{Team members}}\\
+Sasaran Aurelian Noris, 236/2, aurelian.sasaran@stud.ubbcluj.ro
+\end{flushright}
+
+\vspace{4cm}
+
+\begin{center}
+2025-2026
+\end{center}
+
+\end{titlepage}
+
+\pagenumbering{gobble}
+
+\chapter{Introduction}
+\section{Description of the problem solved with AI}
+
+
+Taking patient history and developing communication skills are core components of dental and medical education. However, limited access to real patients, high costs of standardized patients (actors), and the variability of clinical scenarios restrict students' opportunities to practice consistently. Recent studies have demonstrated the feasibility of using conversational AI and large language models (LLMs) as \emph{virtual patients} that can simulate realistic patient interactions for educational purposes \cite{suarez2022, or2024, jones2025, cepdnaclk2022}. Such systems can provide scalable, repeatable, and contextually rich training environments.
+
+\subsection{Basic idea of the project}
+
+The project aims to develop an \textbf{AI-based virtual patient chatbot} that plays the role of a dental patient with specific symptoms. Students interact with the system through natural language, asking diagnostic questions and receiving answers that mimic real patient behavior. In the initial prototype, the 'AI prediction' is hard-coded into predefined responses. In later stages, these responses will be generated dynamically by the best-performing AI model trained on dental communication scenarios \cite{suarez2022, cepdnaclk2022}.
+
+\subsection{Motivation (why an intelligent algorithm is needed)}
+
+Using an intelligent model instead of a scripted dialogue engine is essential because:
+\begin{itemize}
+  \item \textbf{Scalability:} AI models can generate a wide variety of cases and symptom progressions, enabling students to experience diverse clinical contexts without significant manual effort \cite{jones2025}.
+  \item \textbf{Natural language flexibility:} Unlike rule-based systems, LLMs can interpret open-ended questions and respond coherently even when the input phrasing varies \cite{or2024}.
+  \item \textbf{Feedback potential:} The system can evaluate conversation quality, identify missing questions, and provide formative feedback for students, supporting self-directed learning \cite{suarez2022, or2024}.
+  \item \textbf{Resource efficiency and safety:} Virtual patients reduce dependence on actors and mitigate ethical and logistical issues related to contact between student and patient in the early stages \cite{suarez2022}.
+\end{itemize}
+
+\subsection{Scientific problem addressed}
+
+The scientific problem focuses on how to \textbf{model the conversational behavior of a virtual patient} so that the responses are medically plausible, contextually consistent, and pedagogically useful. Key subproblems include:
+\begin{itemize}
+  \item Understanding the intent and clinical entities in the student`s questions (Natural Language Understanding);
+  \item Generating contextually coherent answers that remain consistent with the simulated case scenario;
+  \item Measuring the realism, relevance, and educational quality of AI-generated dialogues.
+\end{itemize}
+These challenges have been addressed in pilot projects and open-source implementations for dental education \cite{or2024, cepdnaclk2022}.
+
+\subsection{Plastic description of the problem}
+
+In a simulated consultation, a dental student engages in a text-based dialogue with the virtual patient. The student asks questions about the onset, location, intensity, and triggers of pain, along with medical history and habits. The virtual patient responds according to a predefined clinical profile (for example, pulpitis with throbbing pain and temperature sensitivity) and may exhibit emotional cues such as anxiety or hesitation to enhance realism \cite{suarez2022}. The educational goal is to help students collect relevant information and practice empathetic communication.
+
+\subsection{Formal description of the problem}
+:(
+% Let $Q$ be the set of student questions (in natural language) and $A$ the set of possible patient responses. Each clinical scenario $S_i$ is defined by a set of internal states or symptoms $\Sigma_i$.  
+% The AI model can be defined as a function $f_\theta$:
+% \[
+% f_\theta: Q \times S_i \rightarrow A_{pred}
+% \]
+% with the objective:
+% \[
+% \max_\theta \; \mathrm{Sim}\big(A_{pred}, A_{ref}\mid S_i\big)
+% \]
+% where $\mathrm{Sim}$ represents a semantic similarity measure (e.g., cosine similarity of embeddings or BERTScore) and $A_{ref}$ denotes reference answers validated by experts or obtained from scripted cases \cite{or2024, jones2025}.  
+
+\subsection{Users}
+
+\begin{itemize}
+  \item \textbf{Dental students:} primary users who train diagnostic and communication skills
+  \item \textbf{Instructors / Dental Teachers:} monitor student performance and design case scenarios
+  \item \textbf{Developers / AI engineers:} maintain and optimize the model and platform.
+\end{itemize}
+
+\subsection{Input and output data}
+
+\begin{itemize}
+  \item \textbf{Input:} Natural language questions typed by the student
+  \item \textbf{Output:} Textual responses simulating patient answers, optionally accompanied by relevant photos
+\end{itemize}
+
+\subsection{Performance evaluation}
+
+The performance of the AI-based virtual patient can be measured through a combination of automatic metrics and human evaluation.
+\begin{itemize}
+  \item \textbf{Automatic NLP metrics:} BERTScore, BLEU, or ROUGE to quantify the similarity between generated and reference responses.
+  \item \textbf{Human evaluation:} Instructor and student feedback on realism, relevance, and educational usefulness; several pilot studies report increased satisfaction and engagement \cite{suarez2022, or2024}.
+  \item \textbf{Educational outcomes:} Improvement in diagnostic accuracy, completeness of patient history, and communication skill scores.
+\end{itemize}
+
+\section{Related Work and Useful Tools and Technologies}
+
+\subsection{Related Work}
+
+A growing body of research explores the integration of artificial intelligence and conversational agents into healthcare and dental education. Several studies demonstrate that AI chatbots can effectively simulate patient interactions, support skill acquisition, and improve diagnostic reasoning.
+
+\textbf{Suarez et al. (2022)} introduced an AI-based virtual patient chatbot designed to help dental students practice diagnostic reasoning through simulated consultations \cite{suarez2022}. Their system used predefined case scenarios and structured dialogue templates that mimicked real patient responses. The chatbot guided students through case-based discussions and offered feedback on question relevance. The authors reported that the students perceived the system as realistic and educationally valuable, showing increased confidence in patient communication.
+
+\textbf{Or et al. (2024)} conducted a pilot study evaluating the use of generative AI chatbots (powered by large language models) for patient history taking in dental education \cite{or2024}. The chatbot allowed students to interact in natural language, offering context-sensitive responses. The study highlighted improved engagement, diagnostic accuracy, and perceived realism compared to traditional simulations. Importantly, the authors emphasized the pedagogical value of AI in enhancing reflective learning and feedback loops.
+
+\textbf{Jones et al. (2025)} proposed a constructivist framework for implementing AI chatbots as virtual patients in classroom-based dental education \cite{jones2025}. Their study combined a conversational interface with case-based learning modules. Using GPT-based models, the authors demonstrated that such systems foster critical thinking and adaptive communication skills. Quantitative results indicated increased student participation and satisfaction, while qualitative feedback pointed to the chatbot’s ability to emulate emotional realism.
+
+An open source implementation by the \textbf{University of Peradeniya} (\citeauthor{cepdnaclk2022}) provides a prototype named \emph{Virtual Patient Simulator for Skill Training in Dentistry} \cite{cepdnaclk2022}. The system features a web-based interface for scenario configuration and dialogue management. It uses modular back-end APIs to connect dialogue logic with AI models and supports multi-turn interactions. The project offers public access to its GitHub repository, making it a valuable resource for educational AI simulation development.
+
+Taken together, these works demonstrate the growing maturity of conversational AI in healthcare training. They validate the feasibility of AI-based patient simulators that combine realism, accessibility, and educational value. The current project builds on these findings by extending interactivity, integrating contextual reasoning, and evaluating LLM performance within structured dental consultation scenarios.
+
+\subsection{Useful Tools and Technologies}
+
+The implementation of a virtual patient chatbot for dental education leverages a combination of natural language processing frameworks, large language models, and user-interface technologies. The most relevant tools and technologies include:
+
+\begin{itemize}
+  \item \textbf{Large Language Models (LLMs):} OpenAI`s GPT models, Google`s Gemini, and Anthropic`s Claude are capable of context-aware text generation and dialogue management. These models can be fine-tuned or prompted with case-specific data to simulate realistic patient behavior.
+  \item \textbf{Frameworks for Conversational AI:} Open source frameworks such as \emph{Rasa}, \emph{LangChain}, and \emph{Microsoft Bot Framework} enable dialogue orchestration, intent recognition, and integration with LLM APIs. They support context tracking, multi-turn dialogue, and evaluation logging.
+  \item \textbf{Datasets:} For medical and dental contexts, datasets such as \emph{MedDialog} or our private patient-dentist conversations.
+  \item \textbf{Evaluation Metrics and Libraries:} Tools like \emph{HuggingFace Transformers}, \emph{Sentence-BERT}, and \emph{BERTScore} libraries can compute semantic similarity between AI-generated and reference responses. These are crucial for evaluating coherence, consistency, and educational quality.
+  \item \textbf{Web Development Stack:} A minimal viable prototype can be implemented using \emph{Python Flask} or \emph{FastAPI} for the back-end, and \emph{React.js} or \emph{Streamlit} for the front-end interface, connected to an LLM API endpoint. The system can log user interactions in JSON format for later analysis.
+\end{itemize}
+
+The combination of these tools supports both the technical and pedagogical objectives of the project: a web-based, AI-powered virtual patient that interacts naturally with students, allows structured evaluation, and can evolve as more advanced LLMs and datasets become available.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+
+\setstretch{1.5}
+\end{document}

@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{graphicx}
+
+\geometry{a4paper, margin=1in}
+
+\title{Evaluation Framework and Updated Results for LLM Dental Patient Simulation}
+\author{
+  \textsc{Marcu Emanuel}\\[0.4em]
+  \normalsize\textbf{Team: VirtuDent}
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Evaluation Methodology}
+
+To ensure the clinical accuracy and immersive quality of the virtual patient, we implemented a rigorous testing suite comprising three distinct metrics. The model was subjected to a standardized interview protocol consisting of opening questions, chief complaint inquiries, and disease-specific diagnostic questions.
+
+\subsection{Symptom Fidelity Score (SFS)}
+The Symptom Fidelity Score measures the accuracy of the LLM's clinical presentation against the ground truth symptoms defined in the knowledge base. It penalizes both the omission of required symptoms and the hallucination of non-existent symptoms.
+
+Let $S_{expected}$ be the set of symptoms required for a specific diagnosis. Let $S_{mentioned}$ be the set of symptoms extracted from the LLM's responses, and $S_{hallucinated}$ be the subset of mentioned symptoms that are medically contraindicated or irrelevant.
+
+\begin{equation}
+    SFS = \max\left(0, 1 - \frac{N_{missing} + N_{hallucinated}}{|S_{expected}|}\right)
+\end{equation}
+
+\subsection{Role-Playing Consistency Score (RPCS)}
+This metric evaluates the stability of the patient persona. It detects breaks in character, such as the use of medical jargon, providing medical advice, or meta-awareness (“I am an AI model”).
+
+\begin{equation}
+    RPCS = 
+    \begin{cases} 
+    1.0 & \text{if } V = 0 \\
+    0.8 & \text{if } 0 < R_v \leq 0.1 \\
+    0.5 & \text{if } 0.1 < R_v \leq 0.3 \\
+    0.2 & \text{if } R_v > 0.3
+    \end{cases}
+\end{equation}
+
+\subsection{Clinical Realism Score (CRS)}
+The CRS evaluates linguistic and behavioral realism across four dimensions: subjective symptom description, proper layperson vocabulary, pain description specificity, and internal consistency.
+
+\begin{equation}
+    CRS = \frac{1}{16} \sum_{i=1}^{4} S_{dim_i}
+\end{equation}
+
+\section{Model Specification}
+
+All simulations were generated using the large language model 
+\textbf{meta-llama/llama-4-scout-17b-16e-instruct}, executed via the Groq API.
+
+The model operates with:
+\begin{itemize}
+    \item 17B parameters
+    \item 16E token representation
+    \item high-throughput, low-latency inference through Groq hardware
+    \item no fine-tuning (pure prompt-based conditioning)
+    \item custom system prompts enforcing patient persona, symptom constraints
+          and dialogue consistency
+\end{itemize}
+
+The evaluation framework interacts with the model in a controlled step-by-step
+simulation environment, where each LLM reply undergoes automatic parsing for
+symptom extraction, hallucination detection and persona consistency scoring.
+
+\section{Experimental Results}
+
+The updated model was evaluated across 8 dental pathologies. For each condition, 2 full consultation simulations were run (Total $N = 16$).
+
+\subsection{Aggregate Performance}
+
+The model demonstrated robust performance across all metrics, with particularly strong results in Clinical Realism and Role Consistency.
+
+\begin{table}[H]
+\centering
+\caption{Aggregate Metrics Across All Tests}
+\label{tab:aggregate}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Mean} & \textbf{Min} & \textbf{Max} \\
+\midrule
+Symptom Fidelity (SFS) & 0.984 & 0.875 & 1.000 \\
+Role Consistency (RPCS) & 0.950 & 0.800 & 1.000 \\
+Clinical Realism (CRS) & 0.981 & 0.938 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Performance by Disease}
+
+\begin{table}[H]
+\centering
+\caption{Performance Breakdown by Disease (Average of 2 runs)}
+\label{tab:disease_results}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Disease} & \textbf{Avg SFS} & \textbf{Avg RPCS} & \textbf{Avg CRS} & \textbf{Overall Score} \\
+\midrule
+Chronic Apical Periodontitis & 1.000 & 1.000 & 1.000 & \textbf{1.000} \\
+Pericoronitis                & 1.000 & 1.000 & 1.000 & \textbf{1.000} \\
+Reversible Pulpitis          & 1.000 & 1.000 & 1.000 & \textbf{1.000} \\
+Irreversible Pulpitis        & 1.000 & 1.000 & 1.000 & \textbf{1.000} \\
+
+Acute Apical Periodontitis   & 1.000 & 1.000 & 0.938 & 0.979 \\
+Pulp Necrosis                & 1.000 & 0.900 & 0.969 & 0.969 \\
+Simple Cavities              & 1.000 & 0.800 & 1.000 & 0.933 \\
+Periodontal Abscess          & 0.875 & 0.900 & 0.938 & 0.904 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Error Analysis}
+
+\begin{itemize}
+    \item \textbf{Symptom Fidelity:}  
+    Minor reductions in SFS appeared primarily in  \textit{Periodontal Abscess}, where the mapping contains a large number of required symptoms, many of which real patients do not spontaneously mention.
+    
+    \item \textbf{Hallucinations:}  
+    No significant hallucinations were observed across most diseases. The model showed strong discipline in avoiding symptoms unrelated to the diagnosis.
+
+    \item \textbf{Role Consistency Issues:}  
+    Occasional RPCS reductions (to 0.8) were caused by very small meta-awareness artifacts such as conversational fillers that match predefined violation patterns.
+
+    \item \textbf{Clinical Realism:}  
+    CRS remained consistently high across all pathologies, with scores between 0.938 and 1.000, indicating strong alignment with natural patient speech patterns.
+\end{itemize}
+
+\end{document}

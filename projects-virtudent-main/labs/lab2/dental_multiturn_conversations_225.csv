@@ -1,0 +1,226 @@
+case_id,disease_label,turn_intent,doctor_question,patient_answer
+1,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+2,pulpitis_acute,duration,Since when do you feel this pain?,I've had it for about 48 hours.
+3,pulpitis_acute,trigger,What makes the pain worse?,Cold drinks cause sharp pain.
+4,pulpitis_acute,severity,How strong is the pain?,"It's a throbbing, severe pain."
+5,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+6,gingivitis,where_location,Where exactly does it hurt?,It feels sore around several teeth.
+7,gingivitis,duration,Since when do you feel this pain?,It started about a week ago.
+8,gingivitis,trigger,What makes the pain worse?,Eating harder foods is painful.
+9,gingivitis,severity,How strong is the pain?,It is uncomfortable but not extreme.
+10,gingivitis,extra,Is there anything else you noticed?,I noticed more plaque lately.
+11,pulpitis_acute,where_location,Where exactly does it hurt?,It's a sharp pain in one lower molar.
+12,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+13,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+14,pulpitis_acute,severity,How strong is the pain?,"It's a throbbing, severe pain."
+15,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+16,gingivitis,where_location,Where exactly does it hurt?,My gums hurt around the front teeth.
+17,gingivitis,duration,Since when do you feel this pain?,It's been going on for almost a week.
+18,gingivitis,trigger,What makes the pain worse?,Eating harder foods is painful.
+19,gingivitis,severity,How strong is the pain?,It's mild but annoying.
+20,gingivitis,extra,Is there anything else you noticed?,I noticed more plaque lately.
+21,gingivitis,where_location,Where exactly does it hurt?,It feels sore around several teeth.
+22,gingivitis,duration,Since when do you feel this pain?,It's been going on for almost a week.
+23,gingivitis,trigger,What makes the pain worse?,Eating harder foods is painful.
+24,gingivitis,severity,How strong is the pain?,It is uncomfortable but not extreme.
+25,gingivitis,extra,Is there anything else you noticed?,Sometimes there is a bad taste.
+26,gingivitis,where_location,Where exactly does it hurt?,The pain is mostly in the gums.
+27,gingivitis,duration,Since when do you feel this pain?,It's been going on for almost a week.
+28,gingivitis,trigger,What makes the pain worse?,Flossing hurts a lot.
+29,gingivitis,severity,How strong is the pain?,It's mild but annoying.
+30,gingivitis,extra,Is there anything else you noticed?,My gums look red and swollen.
+31,periapical_abscess,where_location,Where exactly does it hurt?,I feel pressure around a back tooth.
+32,periapical_abscess,duration,Since when do you feel this pain?,It has been getting worse for a few days.
+33,periapical_abscess,trigger,What makes the pain worse?,Chewing worsens the pressure.
+34,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+35,periapical_abscess,extra,Is there anything else you noticed?,I had a mild fever yesterday.
+36,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+37,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+38,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+39,pulpitis_acute,severity,How strong is the pain?,It feels like a very strong pulsating ache.
+40,pulpitis_acute,extra,Is there anything else you noticed?,It sometimes radiates to my ear.
+41,dentin_hypersensitivity,where_location,Where exactly does it hurt?,The pain is on the upper left premolar.
+42,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+43,dentin_hypersensitivity,trigger,What makes the pain worse?,Sweet foods make it hurt.
+44,dentin_hypersensitivity,severity,How strong is the pain?,The sensitivity comes and goes.
+45,dentin_hypersensitivity,extra,Is there anything else you noticed?,I recently switched toothpaste.
+46,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+47,periapical_abscess,duration,Since when do you feel this pain?,It began earlier this week.
+48,periapical_abscess,trigger,What makes the pain worse?,Touching the tooth causes strong pain.
+49,periapical_abscess,severity,How strong is the pain?,It's very intense and wakes me up.
+50,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+51,dentin_hypersensitivity,where_location,Where exactly does it hurt?,I feel it around a top side tooth.
+52,dentin_hypersensitivity,duration,Since when do you feel this pain?,It started earlier this month.
+53,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+54,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+55,dentin_hypersensitivity,extra,Is there anything else you noticed?,I recently switched toothpaste.
+56,gingivitis,where_location,Where exactly does it hurt?,The pain is mostly in the gums.
+57,gingivitis,duration,Since when do you feel this pain?,It started about a week ago.
+58,gingivitis,trigger,What makes the pain worse?,Brushing makes them bleed.
+59,gingivitis,severity,How strong is the pain?,It's mild but annoying.
+60,gingivitis,extra,Is there anything else you noticed?,Sometimes there is a bad taste.
+61,dentin_hypersensitivity,where_location,Where exactly does it hurt?,Mostly one tooth on the top left.
+62,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+63,dentin_hypersensitivity,trigger,What makes the pain worse?,Sweet foods make it hurt.
+64,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+65,dentin_hypersensitivity,extra,Is there anything else you noticed?,I grind my teeth sometimes.
+66,dentin_hypersensitivity,where_location,Where exactly does it hurt?,The pain is on the upper left premolar.
+67,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+68,dentin_hypersensitivity,trigger,What makes the pain worse?,Sweet foods make it hurt.
+69,dentin_hypersensitivity,severity,How strong is the pain?,The sensitivity comes and goes.
+70,dentin_hypersensitivity,extra,Is there anything else you noticed?,It happens mostly in the morning.
+71,pulpitis_acute,where_location,Where exactly does it hurt?,It's a sharp pain in one lower molar.
+72,pulpitis_acute,duration,Since when do you feel this pain?,I've had it for about 48 hours.
+73,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+74,pulpitis_acute,severity,How strong is the pain?,The pain is intense and constant.
+75,pulpitis_acute,extra,Is there anything else you noticed?,I could not sleep well last night.
+76,gingivitis,where_location,Where exactly does it hurt?,My gums hurt around the front teeth.
+77,gingivitis,duration,Since when do you feel this pain?,I've been feeling this for a few days.
+78,gingivitis,trigger,What makes the pain worse?,Flossing hurts a lot.
+79,gingivitis,severity,How strong is the pain?,Pain is moderate.
+80,gingivitis,extra,Is there anything else you noticed?,I noticed more plaque lately.
+81,gingivitis,where_location,Where exactly does it hurt?,It feels sore around several teeth.
+82,gingivitis,duration,Since when do you feel this pain?,I've been feeling this for a few days.
+83,gingivitis,trigger,What makes the pain worse?,Brushing makes them bleed.
+84,gingivitis,severity,How strong is the pain?,It's mild but annoying.
+85,gingivitis,extra,Is there anything else you noticed?,My gums look red and swollen.
+86,dentin_hypersensitivity,where_location,Where exactly does it hurt?,Mostly one tooth on the top left.
+87,dentin_hypersensitivity,duration,Since when do you feel this pain?,I've had it for two weeks.
+88,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold drinks trigger sharp pain.
+89,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+90,dentin_hypersensitivity,extra,Is there anything else you noticed?,It happens mostly in the morning.
+91,dentin_hypersensitivity,where_location,Where exactly does it hurt?,The pain is on the upper left premolar.
+92,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+93,dentin_hypersensitivity,trigger,What makes the pain worse?,Sweet foods make it hurt.
+94,dentin_hypersensitivity,severity,How strong is the pain?,Quick and intense stabs of pain.
+95,dentin_hypersensitivity,extra,Is there anything else you noticed?,It happens mostly in the morning.
+96,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+97,periapical_abscess,duration,Since when do you feel this pain?,It has been getting worse for a few days.
+98,periapical_abscess,trigger,What makes the pain worse?,Chewing worsens the pressure.
+99,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+100,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+101,dentin_hypersensitivity,where_location,Where exactly does it hurt?,I feel it around a top side tooth.
+102,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+103,dentin_hypersensitivity,trigger,What makes the pain worse?,Sweet foods make it hurt.
+104,dentin_hypersensitivity,severity,How strong is the pain?,The sensitivity comes and goes.
+105,dentin_hypersensitivity,extra,Is there anything else you noticed?,I grind my teeth sometimes.
+106,dentin_hypersensitivity,where_location,Where exactly does it hurt?,The pain is on the upper left premolar.
+107,dentin_hypersensitivity,duration,Since when do you feel this pain?,It started earlier this month.
+108,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+109,dentin_hypersensitivity,severity,How strong is the pain?,Quick and intense stabs of pain.
+110,dentin_hypersensitivity,extra,Is there anything else you noticed?,I recently switched toothpaste.
+111,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+112,pulpitis_acute,duration,Since when do you feel this pain?,It started two days ago.
+113,pulpitis_acute,trigger,What makes the pain worse?,It hurts when I bite down.
+114,pulpitis_acute,severity,How strong is the pain?,"It's a throbbing, severe pain."
+115,pulpitis_acute,extra,Is there anything else you noticed?,I could not sleep well last night.
+116,periapical_abscess,where_location,Where exactly does it hurt?,The swelling is near my lower jaw.
+117,periapical_abscess,duration,Since when do you feel this pain?,It started three days ago.
+118,periapical_abscess,trigger,What makes the pain worse?,Touching the tooth causes strong pain.
+119,periapical_abscess,severity,How strong is the pain?,It feels like deep throbbing pressure.
+120,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+121,periapical_abscess,where_location,Where exactly does it hurt?,The swelling is near my lower jaw.
+122,periapical_abscess,duration,Since when do you feel this pain?,It has been getting worse for a few days.
+123,periapical_abscess,trigger,What makes the pain worse?,Hot drinks increase the throbbing.
+124,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+125,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+126,pulpitis_acute,where_location,Where exactly does it hurt?,It's a sharp pain in one lower molar.
+127,pulpitis_acute,duration,Since when do you feel this pain?,I've had it for about 48 hours.
+128,pulpitis_acute,trigger,What makes the pain worse?,Cold drinks cause sharp pain.
+129,pulpitis_acute,severity,How strong is the pain?,The pain is intense and constant.
+130,pulpitis_acute,extra,Is there anything else you noticed?,It sometimes radiates to my ear.
+131,pulpitis_acute,where_location,Where exactly does it hurt?,It hurts deeply in a back tooth on the right.
+132,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+133,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+134,pulpitis_acute,severity,How strong is the pain?,It feels like a very strong pulsating ache.
+135,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+136,dentin_hypersensitivity,where_location,Where exactly does it hurt?,I feel it around a top side tooth.
+137,dentin_hypersensitivity,duration,Since when do you feel this pain?,It started earlier this month.
+138,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+139,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+140,dentin_hypersensitivity,extra,Is there anything else you noticed?,It happens mostly in the morning.
+141,dentin_hypersensitivity,where_location,Where exactly does it hurt?,I feel it around a top side tooth.
+142,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+143,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+144,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+145,dentin_hypersensitivity,extra,Is there anything else you noticed?,I recently switched toothpaste.
+146,dentin_hypersensitivity,where_location,Where exactly does it hurt?,The pain is on the upper left premolar.
+147,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+148,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+149,dentin_hypersensitivity,severity,How strong is the pain?,The pain is sharp but short.
+150,dentin_hypersensitivity,extra,Is there anything else you noticed?,It happens mostly in the morning.
+151,dentin_hypersensitivity,where_location,Where exactly does it hurt?,Mostly one tooth on the top left.
+152,dentin_hypersensitivity,duration,Since when do you feel this pain?,It started earlier this month.
+153,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold drinks trigger sharp pain.
+154,dentin_hypersensitivity,severity,How strong is the pain?,Quick and intense stabs of pain.
+155,dentin_hypersensitivity,extra,Is there anything else you noticed?,I grind my teeth sometimes.
+156,gingivitis,where_location,Where exactly does it hurt?,My gums hurt around the front teeth.
+157,gingivitis,duration,Since when do you feel this pain?,It started about a week ago.
+158,gingivitis,trigger,What makes the pain worse?,Eating harder foods is painful.
+159,gingivitis,severity,How strong is the pain?,It's mild but annoying.
+160,gingivitis,extra,Is there anything else you noticed?,My gums look red and swollen.
+161,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+162,periapical_abscess,duration,Since when do you feel this pain?,It began earlier this week.
+163,periapical_abscess,trigger,What makes the pain worse?,Chewing worsens the pressure.
+164,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+165,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+166,periapical_abscess,where_location,Where exactly does it hurt?,The swelling is near my lower jaw.
+167,periapical_abscess,duration,Since when do you feel this pain?,It started three days ago.
+168,periapical_abscess,trigger,What makes the pain worse?,Touching the tooth causes strong pain.
+169,periapical_abscess,severity,How strong is the pain?,It's very intense and wakes me up.
+170,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+171,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+172,periapical_abscess,duration,Since when do you feel this pain?,It began earlier this week.
+173,periapical_abscess,trigger,What makes the pain worse?,Hot drinks increase the throbbing.
+174,periapical_abscess,severity,How strong is the pain?,It's very intense and wakes me up.
+175,periapical_abscess,extra,Is there anything else you noticed?,My face feels slightly swollen.
+176,dentin_hypersensitivity,where_location,Where exactly does it hurt?,Mostly one tooth on the top left.
+177,dentin_hypersensitivity,duration,Since when do you feel this pain?,It has been happening for several days.
+178,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold air makes the tooth sensitive.
+179,dentin_hypersensitivity,severity,How strong is the pain?,Quick and intense stabs of pain.
+180,dentin_hypersensitivity,extra,Is there anything else you noticed?,I grind my teeth sometimes.
+181,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+182,periapical_abscess,duration,Since when do you feel this pain?,It started three days ago.
+183,periapical_abscess,trigger,What makes the pain worse?,Chewing worsens the pressure.
+184,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+185,periapical_abscess,extra,Is there anything else you noticed?,I had a mild fever yesterday.
+186,pulpitis_acute,where_location,Where exactly does it hurt?,It's a sharp pain in one lower molar.
+187,pulpitis_acute,duration,Since when do you feel this pain?,I've had it for about 48 hours.
+188,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+189,pulpitis_acute,severity,How strong is the pain?,The pain is intense and constant.
+190,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+191,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+192,pulpitis_acute,duration,Since when do you feel this pain?,I've had it for about 48 hours.
+193,pulpitis_acute,trigger,What makes the pain worse?,It hurts when I bite down.
+194,pulpitis_acute,severity,How strong is the pain?,"It's a throbbing, severe pain."
+195,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+196,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+197,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+198,pulpitis_acute,trigger,What makes the pain worse?,Chewing makes it much worse.
+199,pulpitis_acute,severity,How strong is the pain?,The pain is intense and constant.
+200,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.
+201,dentin_hypersensitivity,where_location,Where exactly does it hurt?,I feel it around a top side tooth.
+202,dentin_hypersensitivity,duration,Since when do you feel this pain?,I've had it for two weeks.
+203,dentin_hypersensitivity,trigger,What makes the pain worse?,Cold drinks trigger sharp pain.
+204,dentin_hypersensitivity,severity,How strong is the pain?,The sensitivity comes and goes.
+205,dentin_hypersensitivity,extra,Is there anything else you noticed?,I recently switched toothpaste.
+206,periapical_abscess,where_location,Where exactly does it hurt?,The pain is in the lower left molar.
+207,periapical_abscess,duration,Since when do you feel this pain?,It has been getting worse for a few days.
+208,periapical_abscess,trigger,What makes the pain worse?,Touching the tooth causes strong pain.
+209,periapical_abscess,severity,How strong is the pain?,The pain is severe and constant.
+210,periapical_abscess,extra,Is there anything else you noticed?,My face feels slightly swollen.
+211,pulpitis_acute,where_location,Where exactly does it hurt?,It's a sharp pain in one lower molar.
+212,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+213,pulpitis_acute,trigger,What makes the pain worse?,Cold drinks cause sharp pain.
+214,pulpitis_acute,severity,How strong is the pain?,It feels like a very strong pulsating ache.
+215,pulpitis_acute,extra,Is there anything else you noticed?,It sometimes radiates to my ear.
+216,periapical_abscess,where_location,Where exactly does it hurt?,The swelling is near my lower jaw.
+217,periapical_abscess,duration,Since when do you feel this pain?,It started three days ago.
+218,periapical_abscess,trigger,What makes the pain worse?,Hot drinks increase the throbbing.
+219,periapical_abscess,severity,How strong is the pain?,It's very intense and wakes me up.
+220,periapical_abscess,extra,Is there anything else you noticed?,It hurts when I close my teeth together.
+221,pulpitis_acute,where_location,Where exactly does it hurt?,The pain is in my lower right molar.
+222,pulpitis_acute,duration,Since when do you feel this pain?,The pain began last night.
+223,pulpitis_acute,trigger,What makes the pain worse?,It hurts when I bite down.
+224,pulpitis_acute,severity,How strong is the pain?,It feels like a very strong pulsating ache.
+225,pulpitis_acute,extra,Is there anything else you noticed?,I also feel some pressure in the jaw.

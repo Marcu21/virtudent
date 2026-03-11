@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[romanian]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=black
+}
+
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
+\usepackage{titling}
+
+\pretitle{\begin{center}\LARGE\bfseries\vspace{-1cm}}
+\posttitle{\par\vspace{0.5em}\hrule\vspace{0.8em}\end{center}}
+\preauthor{\begin{center}\large}
+\postauthor{\end{center}}
+\predate{\begin{center}\small}
+\postdate{\end{center}}
+
+\title{Pacient virtual stomatologic}
+\author{
+  \textsc{Marcu Emanuel}\\[0.4em]
+  \normalsize\textbf{Echipa: VirtuDent}
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{1em}
+
+\section{Funcționalități de bază ale aplicației}
+
+Principalele funcționalități sunt:
+\begin{itemize}
+    \item Simulare realistă de pacient, care descrie simptomele folosind un limbaj informal, asemănător cu cel al unui pacient real;
+    \item Conversație liberă între student și pacient, în care întrebările formulate influențează răspunsurile primite;
+    \item Generarea automată a răspunsurilor în limbaj natural;
+    \item Oferirea de hint-uri progresive, care îl ajută pe student să formuleze întrebări mai relevante, fără a dezvălui direct diagnosticul;
+    \item Posibilitatea de a solicita investigații suplimentare, precum o radiografie, preluată dintr-o bază de date cu imagini specifice fiecărei afecțiuni;
+    \item Formularea și evaluarea automată a diagnosticului, cu feedback detaliat privind corectitudinea și raționamentul;
+    \item Salvarea istoricului conversațiilor și rezultatelor, pentru urmărirea progresului fiecărui utilizator.
+\end{itemize}
+
+\section{Descrierea problemei rezolvate cu ajutorul AI}
+
+Aplicația propusă urmărește să sprijine studenții la medicină dentară în procesul de formare clinică printr-un pacient virtual interactiv.  
+Problema identificată este faptul că studenții intră în contact direct cu pacienții abia în anul IV, iar lipsa experienței practice duce la ezitare și nesiguranță în stabilirea unui diagnostic.
+
+Prin acest proiect se oferă un mod sigur și realist de a exersa anamneza și raționamentul clinic, simulând un pacient care își descrie simptomele în limbaj informal.  
+Studentul poate adresa întrebări, primi răspunsuri, cere indicii (hinturi) și, în final, propune un diagnostic care este verificat automat.
+
+\noindent\textbf{Utilizatori:} studenți la medicină dentară și cadre didactice.\\
+\textbf{Date de intrare:} întrebările formulate de student și diagnosticul propus (text).\\
+\textbf{Date de ieșire:} răspunsurile pacientului, hinturile și evaluarea diagnosticului.\\
+\textbf{Tipul datelor:} text în limbaj natural, ulterior posibil și imagini radiologice.
+
+\medskip
+Performanța sistemului AI este evaluată prin calitatea simulării pacientului virtual și acuratețea evaluării diagnosticului propus de student.  
+Se urmărește ca răspunsurile generate să fie realiste, logice și consecvente cu simptomele definite, iar verdictul final („corect”, „parțial”, „greșit”) să reflecte cât mai fidel situația cazului.  
+Astfel, performanța AI-ului indică capacitatea sistemului de a reproduce comportamentul unui pacient real și de a evalua obiectiv răspunsurile studentului.
+
+\section{Related Work \& Useful Tools and Technologies}
+
+Pentru dezvoltarea aplicației au fost analizate proiecte similare.
+
+\subsection{Virtual Patient Simulator for Skill Training in Dentistry – University of Peradeniya, Sri Lanka}
+\href{https://github.com/cepdnaclk/e16-4yp-Virtual-Patient-Simulator-for-Skill-Training-in-Dentistry}{Link GitHub}
+
+Proiectul propune un simulator educațional care combină realitatea virtuală (VR) și tehnici de inteligență artificială pentru antrenarea abilităților clinice ale studenților la medicină dentară.
+
+\textbf{Date utilizate:}
+Două cazuri clinice virtuale, fiecare conținând informații despre anamneză, examinare, investigații și diagnostic.  
+Au fost incluse modele 3D intraorale realizate în Blender și imagini radiologice (DPT, IOPA, CBCT).
+
+\textbf{Algoritmi de AI folosiți:}
+Sistemul utilizează un chatbot bazat pe reguli predefinite, care oferă răspunsuri și feedback automat pentru student.  
+Nu sunt folosite modele NLP sau algoritmi de învățare automată avansați, ci o logică deterministă bazată pe scenarii.
+
+\textbf{Performanțe obținute:}
+Simulatorul a fost testat pe un grup de 33 de studenți, împărțiți între metoda tradițională și cea virtuală.  
+Scorul mediu la testul OSCE a crescut de la 44.21 la 58.95 pentru grupul VP.  
+Rezultatele sunt similare cu cele ale grupului de control (p-value = 0.818 pre-test, 0.666 post-test).  
+Concluzia studiului: performanțele sistemului VP sunt comparabile cu instruirea clinică reală.  
+Studenții au raportat o mai bună încredere în diagnostic și o motivație crescută pentru exersare.
+
+\textbf{Librării și tehnologii:}
+React, Redux, Firebase Firestore pentru interfața web și gestiunea datelor; Blender pentru modelarea 3D.
+
+\textbf{Git / resurse:}
+Codul sursă și documentația completă sunt disponibile public pe GitHub.
+
+\subsection{Deep Learning-Based Chatbot for Medical Assistance – Puneet Shivaay (GitHub)}
+\href{https://github.com/PuneetShivaay/Deep-Learning-Based-Chatbot-For-Medical-Assistance}{Link GitHub}
+
+Proiectul dezvoltă un chatbot inteligent pentru asistență medicală, care oferă recomandări de diagnostic pe baza simptomelor introduse de utilizator.  
+Scopul este de a crea o interacțiune simplă, în limbaj natural, între pacient și un asistent virtual.
+
+\textbf{Date utilizate:}
+Modelul este antrenat pe un fișier JSON (\textit{intents.json}), ce conține perechi între simptome și afecțiuni posibile, precum și mai multe variante de formulare a întrebărilor.  
+În plus, sunt salvate listele de cuvinte și etichete în fișierele \textit{words.pkl} și \textit{labels.pkl}, pentru a facilita recunoașterea tiparelor de text.
+
+\textbf{Algoritmi de AI folosiți:}
+Chatbotul folosește o rețea neuronală antrenată cu \textbf{TensorFlow/Keras}, împreună cu tehnici de procesare a limbajului natural (NLP).  
+Textul introdus este transformat într-un vector (\textit{bag-of-words}), iar modelul învață să asocieze întrebările utilizatorului cu intențiile și diagnosticele corespunzătoare.
+
+\textbf{Performanțe obținute:}
+Proiectul are un caracter demonstrativ, fără metrici numerice (precizie, recall etc.), însă modelul reușește să ofere răspunsuri logice și coerente pentru majoritatea întrebărilor din setul de test.  
+Scopul este validarea ideii și testarea funcționării chatbotului.
+
+\textbf{Librării și tehnologii:}
+Aplicația este realizată în \textbf{Python 3.7}, folosind TensorFlow/Keras pentru modelul AI, NLTK pentru procesarea textului, Tkinter pentru interfața grafică și Pickle pentru salvarea datelor de antrenament.
+
+\textbf{Git / resurse:}
+Codul sursă, modelul antrenat (\textit{chatbot\_model.h5}) și fișierele auxiliare sunt disponibile public pe GitHub.
+
+\end{document}

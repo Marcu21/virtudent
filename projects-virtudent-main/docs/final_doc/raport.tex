@@ -1,0 +1,689 @@
+\documentclass[runningheads,a4paper,11pt]{report}
+
+\usepackage{algorithmic}
+\usepackage{algorithm} 
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{comment} 
+\usepackage{epsfig} 
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{geometry} 
+\usepackage{graphicx}
+\usepackage[colorlinks]{hyperref} 
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{multirow} 
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+\geometry{a4paper,top=3cm,left=2cm,right=2cm,bottom=3cm}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{Virtual Dental Patient}
+\fancyhead[RE,LO]{VirtuDent Team}
+\fancyfoot[RE,LO]{MIRPR 2025-2026}
+\fancyfoot[LE,RO]{\thepage}
+
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{blue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{%
+  \color{blue}\leaders\hrule height \footrulewidth\hfill}}
+
+\hypersetup{
+pdftitle={Virtual Dental Patient Chatbot},
+pdfauthor={VirtuDent Team},
+pdfkeywords={AI, dental education, chatbot, LLM, virtual patient},
+bookmarksnumbered,
+pdfstartview={FitH},
+urlcolor=cyan,
+colorlinks=true,
+linkcolor=red,
+citecolor=green,
+}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\linespread{1}
+
+\makeindex
+
+\begin{document}
+
+\begin{titlepage}
+\sloppy
+
+\begin{center}
+BABEȘ BOLYAI UNIVERSITY, CLUJ NAPOCA, ROMÂNIA
+
+FACULTY OF MATHEMATICS AND COMPUTER SCIENCE
+
+\vspace{6cm}
+
+\Huge \textbf{Virtual Dental Patient Chatbot}
+
+\vspace{1cm}
+
+\normalsize -- MIRPR report --
+
+\end{center}
+
+\vspace{5cm}
+
+\begin{flushright}
+\Large{\textbf{Team members}}\\
+Marcu Emanuel\\
+Sasaran Noris\\
+Mitrea David
+\end{flushright}
+
+\vspace{4cm}
+
+\begin{center}
+2025-2026
+\end{center}
+
+\end{titlepage}
+
+\pagenumbering{gobble}
+
+\begin{abstract}
+This project presents an AI-based virtual dental patient chatbot designed to address a critical gap in dental education: students only encounter real patients in their fourth year, leading to hesitation and insecurity in clinical practice. Our system provides a safe, realistic environment for practicing patient history-taking and diagnostic reasoning before clinical rotations begin.
+
+The intelligent approach employs fine-tuned large language models (LLaMA3.1-8B and RoLLaMA3.1-8B) combined with structured slot filling mechanisms for symptom management. We implemented comprehensive model testing across multiple architectures to select the optimal solution. The system generates natural patient responses in informal language, maintains clinical consistency through slot-based state tracking, and provides automated diagnostic evaluation with detailed feedback.
+
+The dataset comprises 225 synthetically constructed conversations covering 8 dental pathologies, extracted from realistic symptom descriptions. After extensive testing of multiple models (TinyLlama, Phi-2, LLaMA, RoLLaMA), we selected RoLLaMA3.1-8B for its superior prompt adherence and context tracking, despite LLaMA's more fluent language generation. Fine-tuned models achieved training loss reduction from 2.29 to 0.40 in 50 steps using LoRA.
+
+The evaluation framework encompasses three metrics: Symptom Fidelity Score (0.874 mean), Role-Playing Consistency Score (0.958 mean), and Clinical Realism Score (0.971 mean), demonstrating the system's capacity to simulate medically plausible patient interactions. The application enables scalable, repeatable training experiences and represents a valuable educational tool for early clinical skill development in dental students.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\setstretch{1.5}
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\label{chapter:introduction}
+
+\section{What? Why? How?}
+\label{section:what}
+
+\textbf{The Problem:} Dental students face a critical educational gap—they only begin direct patient contact in their fourth year of study. This delayed clinical exposure results in hesitation, insecurity, and inadequate preparation when students must establish diagnoses and communicate with real patients. Traditional solutions like standardized patients (actors) are costly, time-consuming, and offer limited availability.
+
+\textbf{Why It Matters:} Clinical communication and diagnostic reasoning are foundational skills that require extensive practice. Without early, safe opportunities to develop these competencies, students enter clinical rotations underprepared, potentially compromising both their learning experience and patient care quality.
+
+\textbf{Our Solution:} We developed an AI-based virtual dental patient chatbot that simulates realistic patient interactions using fine-tuned large language models. The system allows students to conduct natural language conversations, practice anamnesis, request diagnostic hints, and receive automated evaluation of their diagnostic conclusions. Through extensive testing of multiple AI models, we selected and optimized the architecture that best balances conversational realism with clinical accuracy.
+
+\section{Paper Structure and Original Contributions}
+\label{section:structure}
+
+The main contribution of this work is the development and validation of a hybrid AI system that effectively simulates virtual dental patients for educational purposes, validated through comprehensive testing of multiple model architectures.
+
+The second contribution consists of implementing a structured slot filling mechanism that maintains clinical consistency while allowing natural language interaction, combined with an intelligent diagnostic evaluation module that provides educational feedback.
+
+The third contribution is the establishment of a rigorous three-metric evaluation framework (Symptom Fidelity, Role-Playing Consistency, Clinical Realism) that holistically assesses both technical performance and pedagogical value.
+
+This report is structured as follows. Chapter \ref{chapter:scientificProblem} formally defines the scientific problem and its requirements. Chapter \ref{chapter:stateOfArt} reviews related work in virtual patient simulation. Chapter \ref{chapter:proposedApproach} details our AI architecture, including the slot filling mechanism and diagnostic module. Chapter \ref{chapter:application} describes the system design and testing methodology across multiple models. Chapter \ref{section:numericalValidation} presents experimental results and validation. Chapter \ref{chapter:concl} concludes with discussion and future directions.
+
+\chapter{Scientific Problem}
+\label{chapter:scientificProblem}
+
+\section{Problem Definition}
+\label{section:problemDefinition}
+
+The scientific problem focuses on modeling conversational behavior of a virtual patient such that responses are medically plausible, contextually consistent, and pedagogically effective. This is necessarily an AI problem because:
+
+\begin{itemize}
+\item \textbf{Natural language understanding:} The system must interpret diverse, open-ended student questions and extract clinical intent.
+\item \textbf{Context-aware generation:} Responses must remain consistent with a specific disease profile while adapting to conversation history.
+\item \textbf{Medical domain knowledge:} The system requires understanding of dental pathologies, symptom relationships, and diagnostic reasoning.
+\item \textbf{Persona maintenance:} The model must consistently adopt a patient perspective, avoiding medical jargon or meta-awareness.
+\end{itemize}
+
+Rule-based systems are insufficient because they cannot handle the variability and nuance of natural patient-doctor dialogue. The problem demands intelligent algorithms capable of learning from examples and generalizing to new conversational contexts.
+
+\textbf{Formal Specification:}
+
+\textbf{Input:} 
+\begin{itemize}
+\item Student question $q_t$ at turn $t$ (natural language text)
+\item Conversation history $H_{t-1} = \{(q_1, r_1), ..., (q_{t-1}, r_{t-1})\}$
+\item Disease profile $D = \{d, S_d\}$ where $d$ is the disease and $S_d$ is its symptom set
+\end{itemize}
+
+\textbf{Output:}
+\begin{itemize}
+\item Patient response $r_t$ (natural language text)
+\item Updated slot state $slots_t$ (structured symptom confirmation)
+\item Diagnostic evaluation $eval$ with feedback (when diagnosis is submitted)
+\end{itemize}
+
+\textbf{Constraints:}
+\begin{itemize}
+\item $r_t$ must be consistent with $D$ and $H_{t-1}$
+\item $r_t$ must use layperson language (no medical terminology)
+\item $slots_t$ must accurately reflect symptoms mentioned in $r_t$
+\item $eval$ must be clinically justified with symptom-based reasoning
+\end{itemize}
+
+\section{Users and Data Flow}
+\label{section:users}
+
+\textbf{Primary Users:} Dental students (years 1-3) training diagnostic and communication skills.
+
+\textbf{Secondary Users:} Instructors monitoring progress and designing case scenarios.
+
+\textbf{Input Data:} Natural language questions and proposed diagnoses (text).
+
+\textbf{Output Data:} Patient responses, progressive hints, diagnostic evaluation with detailed symptom-based feedback.
+
+\textbf{Performance Evaluation:} Success is measured by: (1) clinical accuracy of symptom presentation, (2) consistency of patient persona, (3) linguistic realism of responses, and (4) educational value of diagnostic feedback.
+
+\chapter{State of the Art / Related Work}
+\label{chapter:stateOfArt}
+
+\section{Virtual Patient Simulators in Medical Education}
+
+\subsection{University of Peradeniya Project}
+
+The Virtual Patient Simulator for Skill Training in Dentistry \cite{cepdnaclk2022} combines virtual reality (VR) and AI for clinical skill training. The system uses a rule-based chatbot with predefined scenarios, 3D intraoral models in Blender, and radiological images (DPT, IOPA, CBCT).
+
+\textbf{Method:} Deterministic logic based on predefined scenarios; no NLP or machine learning models.
+
+\textbf{Results:} Tested on 33 students, OSCE scores increased from 44.21 to 58.95. Performance comparable to traditional instruction (p=0.666).
+
+\textbf{Technologies:} React, Redux, Firebase Firestore, Blender.
+
+\textbf{Our Approach Differs:} We use generative AI (LLMs) instead of rule-based responses, enabling natural language flexibility and reducing manual scenario authoring. Our evaluation includes quantitative clinical metrics beyond student satisfaction.
+
+\subsection{Recent Research in AI Chatbots for Healthcare Education}
+
+Suarez et al. (2022) \cite{suarez2022} developed a chatbot using structured dialogue templates for dental diagnostic reasoning. Students reported increased confidence, but the system lacked natural language generation capabilities.
+
+Or et al. (2024) \cite{or2024} evaluated GPT-based chatbots for patient history-taking, demonstrating improved engagement and diagnostic accuracy compared to traditional simulations.
+
+Jones et al. (2025) \cite{jones2025} proposed a constructivist framework showing that GPT-based systems foster critical thinking and adaptive communication skills.
+
+\textbf{Why Our Approach Is Better:} We combine the conversational flexibility of LLMs with structured slot filling for clinical state management, providing both natural interaction and medical consistency. Our comprehensive three-metric evaluation framework specifically addresses clinical accuracy, persona stability, and linguistic realism—dimensions often overlooked in prior work.
+
+\chapter{Investigated Approach}
+\label{chapter:proposedApproach}
+
+\section{System Architecture Overview}
+
+Our system employs a hybrid architecture combining large language models with structured clinical state management. The key components are:
+
+\begin{enumerate}
+\item \textbf{Fine-tuned LLM Core:} Generates natural patient responses
+\item \textbf{Slot Filling Mechanism:} Tracks confirmed/denied symptoms
+\item \textbf{Diagnostic Evaluation Module:} Assesses student diagnoses
+\item \textbf{Conversation History Management:} Optimizes token usage
+\end{enumerate}
+
+\section{Slot Filling – Symptom Management}
+\label{section:slotFilling}
+
+The application uses a slot filling mechanism to structurally manage clinical information obtained during conversation.
+
+\textbf{Definition:} A slot represents a symptom that the student has explicitly asked about and the virtual patient has confirmed or denied.
+
+\textbf{Operation:}
+\begin{itemize}
+\item Each relevant question is mapped to a specific symptom
+\item The patient responds in natural language while simultaneously updating the slots structure:
+\begin{itemize}
+\item \texttt{true} $\rightarrow$ symptom present
+\item \texttt{false} $\rightarrow$ symptom absent
+\end{itemize}
+\item The slots structure is used for:
+\begin{itemize}
+\item Maintaining virtual patient consistency
+\item Preventing contradictions between responses
+\item Evaluating the final diagnosis
+\end{itemize}
+\end{itemize}
+
+\textbf{Example:}
+\begin{verbatim}
+{
+  "Cold sensitivity": true,
+  "Pain on chewing": false,
+  "Swelling": true
+}
+\end{verbatim}
+
+This mechanism enables clear separation between:
+\begin{itemize}
+\item \textbf{Conversational response} (text generated by LLM)
+\item \textbf{Internal clinical state} (slots), used for reasoning and evaluation
+\end{itemize}
+
+\section{The /diagnose Module}
+\label{section:diagnoseModule}
+
+The \texttt{/diagnose} module evaluates the correctness of diagnoses provided by students and generates explanatory feedback when incorrect.
+
+\textbf{Primary Goal:} Not only validate the answer but support clinical reasoning by explaining why a diagnosis is wrong and what clinical indicators should have led to the correct one.
+
+\textbf{Functionality:}
+
+When the diagnosis is \textbf{correct}, the system confirms the answer.
+
+When the diagnosis is \textbf{incorrect}, the module:
+\begin{itemize}
+\item Explains why the proposed diagnosis is not correct
+\item Highlights key clinical symptoms that contradict the proposed diagnosis
+\item Explains why the correct diagnosis better matches the clinical case
+\end{itemize}
+
+The explanation is symptom-based and focuses on clinically relevant features rather than abstract reasoning.
+
+\textbf{Example:} If the clinical presentation corresponds to irreversible pulpitis but the student predicts reversible pulpitis, the module explains:
+
+\begin{verbatim}
+The diagnosis cannot be reversible pulpitis because:
+- The pain is spontaneous (not only stimulus-triggered)
+- The pain persists after removal of the stimulus
+- The pain is intense and prolonged
+
+These symptoms are characteristic of irreversible pulpitis 
+and exclude reversible pulpitis, which typically presents 
+with short, stimulus-dependent pain.
+\end{verbatim}
+
+The \texttt{/diagnose} module acts as an educational and corrective mechanism, guiding students toward more accurate clinical reasoning.
+
+\section{Conversation History Management}
+\label{section:historyManagement}
+
+To improve token efficiency, conversation history is deliberately limited. Only the following parts are preserved in active context:
+
+\begin{enumerate}
+\item The \textbf{first user message} (initial problem description)
+\item The \textbf{last eight exchanges} between user and assistant
+\end{enumerate}
+
+All older intermediate messages are removed from context.
+
+\textbf{Benefits:}
+\begin{itemize}
+\item The original clinical problem is always available
+\item Most recent reasoning steps are preserved
+\item Unnecessary token consumption is avoided
+\item Lower token usage enables faster response times
+\item Minimal loss of relevant clinical information
+\end{itemize}
+
+This strategy significantly reduces token usage while maintaining sufficient clinical and conversational context for accurate responses.
+
+\section{Model Selection: Fine-tuning with LoRA}
+
+We fine-tuned large language models using Low-Rank Adaptation (LoRA), a parameter-efficient technique that adapts models to the dental consultation domain.
+
+\textbf{LoRA Configuration:}
+\begin{itemize}
+\item Rank (r): 8
+\item Alpha: 16
+\item Dropout: 0.05
+\item Target modules: Query and value projection layers
+\end{itemize}
+
+\textbf{Training Configuration:}
+\begin{itemize}
+\item Quantization: 4-bit (nf4) using BitsAndBytes
+\item Training epochs: 2
+\item Effective batch size: 8
+\item Learning rate: 5e-5
+\item Scheduler: Cosine with warmup ratio 0.1
+\item Max sequence length: 2048 tokens
+\item Optimizer: Paged AdamW 8-bit
+\item Gradient checkpointing: Enabled
+\end{itemize}
+
+\textbf{System Prompt Design:} Each conversation includes a system prompt specifying:
+\begin{itemize}
+\item Role as dental patient
+\item Specific disease (hidden from student)
+\item Symptom profile
+\item Communication style (informal, layperson language)
+\item Consistency requirements
+\end{itemize}
+
+\chapter{Application (Study Case)}
+\label{chapter:application}
+
+\section{Dataset Description}
+
+The dataset consists of 225 simulated conversations covering 8 dental pathologies:
+\begin{enumerate}
+\item Reversible Pulpitis
+\item Irreversible Pulpitis
+\item Pulp Necrosis
+\item Simple Cavities (Caries)
+\item Pericoronitis
+\item Chronic Apical Periodontitis
+\item Acute Apical Periodontitis
+\item Periodontal Abscess
+\end{enumerate}
+
+Each conversation contains 10-15 turns with:
+\begin{itemize}
+\item Doctor questions in natural language
+\item Patient responses in informal Romanian
+\item Manually extracted symptom profiles per disease
+\end{itemize}
+
+\textbf{Data Split:}
+\begin{itemize}
+\item Training: 90\% ($\sim$202 conversations)
+\item Validation: 10\% ($\sim$23 conversations)
+\item Split at conversation level with fixed seed (42)
+\end{itemize}
+
+\section{Testing Methodology: Multi-Model Comparison}
+\label{section:testing}
+
+\textbf{Critical Design Decision:} Rather than selecting a model arbitrarily, we conducted systematic testing across multiple architectures to identify the optimal solution for our specific use case.
+
+\subsection{Models Tested}
+
+We evaluated the following models:
+
+\begin{enumerate}
+\item \textbf{TinyLlama-1.1B}: Lightweight model for resource-constrained environments
+\item \textbf{Phi-2 (2.7B)}: Microsoft's compact reasoning model
+\item \textbf{LLaMA3.1-8B-Instruct}: Meta's multilingual instruction-tuned model
+\item \textbf{RoLLaMA3.1-8B-Instruct}: Romanian-adapted LLaMA variant
+\end{enumerate}
+
+\subsection{Evaluation Criteria}
+
+Each model was assessed on:
+\begin{itemize}
+\item \textbf{Conversational fluency:} Natural, coherent responses
+\item \textbf{Prompt adherence:} Following instructions to maintain patient persona
+\item \textbf{Context tracking:} Consistency across conversation turns
+\item \textbf{Hallucination rate:} Frequency of medically implausible statements
+\item \textbf{Memory efficiency:} VRAM usage with 4-bit quantization
+\item \textbf{Response quality:} Absence of meta-text or instruction repetition
+\end{itemize}
+
+\subsection{Testing Results and Model Selection}
+
+\begin{table}[htbp]
+\caption{Model Comparison Results}
+\label{tab:modelComparison}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Fluency} & \textbf{Adherence} & \textbf{Context} & \textbf{Selected} \\
+\hline
+TinyLlama & Poor & Poor & Poor & No \\
+Phi-2 & Fair & Poor & Fair & No \\
+LLaMA3.1 & Excellent & Good & Good & No \\
+RoLLaMA3.1 & Very Good & Excellent & Excellent & \textbf{Yes} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+\item \textbf{TinyLlama and Phi-2:} Frequently repeated instructions, added meta-text like "Here is my response as a patient:", and failed to maintain consistent personas. These models were eliminated early in testing.
+
+\item \textbf{LLaMA3.1-8B:} Produced the most fluent and natural-sounding language, with responses that closely mimicked real patient speech. However, it showed higher hallucination rates and occasionally deviated from the symptom profile.
+
+\item \textbf{RoLLaMA3.1-8B:} Demonstrated superior prompt adherence and context tracking. While slightly less fluent than LLaMA, it maintained clinical consistency better and generated fewer contradictions across conversation turns.
+\end{itemize}
+
+\textbf{Final Selection:} We selected \textbf{RoLLaMA3.1-8B} as our primary model because:
+\begin{enumerate}
+\item Educational applications prioritize \textbf{reliability and consistency} over linguistic flourish
+\item Strict adherence to symptom profiles prevents confusing or contradictory training experiences
+\item Better context tracking maintains conversation coherence in longer dialogues
+\item Romanian language optimization aligns with our target user base
+\end{enumerate}
+
+This systematic testing process was essential for validating that our final system meets the specific requirements of medical education rather than simply selecting a popular model.
+
+\section{Implementation Technologies}
+
+\begin{itemize}
+\item \textbf{Framework:} HuggingFace Transformers
+\item \textbf{Optimization:} BitsAndBytes (4-bit quantization), LoRA
+\item \textbf{Infrastructure:} Google Colab T4 GPU (16GB VRAM)
+\item \textbf{Language:} Python 3.10
+\item \textbf{Key Libraries:} PyTorch, Peft, Accelerate
+\end{itemize}
+
+\section{Numerical Validation}
+\label{section:numericalValidation}
+
+\subsection{Methodology}
+
+We implemented a three-metric evaluation framework to holistically assess system performance:
+
+\subsubsection{Symptom Fidelity Score (SFS)}
+
+Measures clinical accuracy against ground truth symptoms:
+
+\begin{equation}
+SFS = \max\left(0, 1 - \frac{N_{missing} + N_{hallucinated}}{|S_{expected}|}\right)
+\end{equation}
+
+Where $N_{missing}$ is the count of omitted symptoms and $N_{hallucinated}$ is the count of medically inaccurate additions.
+
+\subsubsection{Role-Playing Consistency Score (RPCS)}
+
+Evaluates persona stability, detecting medical jargon, advice-giving, or meta-awareness:
+
+\begin{equation}
+RPCS = \begin{cases}
+1.0 & \text{if } V = 0\\
+0.8 & \text{if } 0 < R_v \leq 0.1\\
+0.5 & \text{if } 0.1 < R_v \leq 0.3\\
+0.2 & \text{if } R_v > 0.3
+\end{cases}
+\end{equation}
+
+Where $V$ is total violations and $R_v = V/N_{turns}$ is the violation rate.
+
+\subsubsection{Clinical Realism Score (CRS)}
+
+Assesses linguistic quality across four dimensions (0-4 scale each):
+
+\begin{equation}
+CRS = \frac{1}{16}\sum_{i=1}^{4} S_{dim_i}
+\end{equation}
+
+Dimensions: symptom description, vocabulary, pain description, consistency.
+
+\subsection{Experimental Results}
+
+\textbf{Testing Protocol:} 8 diseases × 3 runs = 24 full consultation simulations.
+
+\begin{table}[htbp]
+\caption{Aggregate Performance Metrics}
+\label{tab:aggregateMetrics}
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Metric} & \textbf{Mean} & \textbf{Min} & \textbf{Max} \\
+\hline
+Symptom Fidelity (SFS) & 0.874 & 0.500 & 1.000 \\
+Role Consistency (RPCS) & 0.958 & 0.800 & 1.000 \\
+Clinical Realism (CRS) & 0.971 & 0.813 & 1.000 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Training Convergence}
+
+\begin{table}[htbp]
+\caption{Training Loss Progression (RoLLaMA)}
+\label{tab:trainingLoss}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Step} & \textbf{Loss} \\
+\hline
+10 & 2.2879 \\
+20 & 0.8347 \\
+30 & 0.6144 \\
+40 & 0.4872 \\
+50 & 0.3980 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Training loss decreased from 2.29 to 0.40 in 50 steps, demonstrating rapid convergence and effective fine-tuning.
+
+\subsection{Disease-Specific Performance}
+
+High fidelity was observed in pulpal diseases (Pulp Necrosis: 1.000, Reversible Pulpitis: 1.000). Lower scores for Periodontal Abscess (0.667) reflect the complexity of distinguishing gum versus tooth pain.
+
+\subsection{Discussion}
+
+\textbf{Strengths:}
+\begin{itemize}
+\item High mean scores validate clinical and pedagogical value
+\item Perfect RPCS (1.0) achieved in 5/8 diseases demonstrates strong persona adherence
+\item Rapid training convergence indicates effective LoRA adaptation
+\item System runs efficiently on accessible hardware (Colab T4)
+\end{itemize}
+
+\textbf{Limitations:}
+\begin{itemize}
+\item Minor hallucinations in complex cases (Periodontal Abscess)
+\item Context window limitations for very long conversations
+\item Limited to 8 diseases (clinical practice requires broader coverage)
+\end{itemize}
+
+\chapter{Conclusion and Future Work}
+\label{chapter:concl}
+
+\section{Summary of Contributions}
+
+This project delivers three primary contributions:
+
+\begin{enumerate}
+\item A hybrid AI system combining fine-tuned LLMs with structured slot filling for realistic, consistent virtual patient simulation.
+\item Systematic testing methodology across multiple model architectures, validating RoLLaMA3.1-8B as optimal for educational applications.
+\item Comprehensive three-metric evaluation framework (SFS, RPCS, CRS) achieving high performance (0.874/0.958/0.971 means).
+\end{enumerate}
+
+\section{SWOT Analysis}
+\label{section:swot}
+
+To strategically assess the project's viability and future potential, we conducted a comprehensive SWOT analysis evaluating internal technical capabilities and external factors.
+
+\subsection{Strengths (Internal)}
+\begin{itemize}
+    \item \textbf{Proven Logic Viability (Web Integration):} The core simulation logic proved to be robust and architecture-independent. The algorithmic module was successfully integrated into a live web application by a partner team, validating the system's modularity.
+    \item \textbf{Rigorous Model Selection:} The systematic testing of multiple architectures (TinyLlama, Phi-2, LLaMA) ensures the final solution is empirically validated rather than arbitrarily chosen.
+    \item \textbf{Robustness via Slot Filling:} Unlike standard chatbots, the system tracks symptom status in real-time, ensuring the patient remains consistent throughout the dialogue.
+    \item \textbf{Ground Truth Enforcement:} The architecture strictly adheres to the provided knowledge base, effectively preventing hallucinations.
+    \item \textbf{Dual Simulation:} The project offers a complete educational loop: training via the \textit{Patient Persona} and immediate validation via the \textit{Professor Persona}.
+\end{itemize}
+
+\subsection{Weaknesses (Internal)}
+\begin{itemize}
+    \item \textbf{Connectivity Dependency:} The logic relies entirely on the Groq API connection. Network instability directly impacts the fluidity of the conversation.
+    \item \textbf{Static Database Management:} Adding new clinical cases requires manual editing of Excel files rather than using a dynamic administrative interface.
+    \item \textbf{Limited Coverage:} Currently restricted to 8 dental pathologies and a relatively small training dataset (225 conversations), which limits exposure to rare cases.
+    \item \textbf{Language Specificity:} The system is primarily optimized for Romanian, limiting immediate international applicability without retraining.
+\end{itemize}
+
+\subsection{Opportunities (External)}
+\begin{itemize}
+    \item \textbf{Native Mobile Application:} Wrapping the core logic into a native mobile application (iOS/Android) would offer a smoother experience compared to the current web interface.
+    \item \textbf{Multimodal Integration:} Extending the dataset to include imaging data (X-rays, intraoral photos) linked to specific Excel cases would complete the clinical picture.
+    \item \textbf{Gamification:} Introducing a scoring system based on diagnostic efficiency (e.g., reaching the correct diagnosis with fewer questions yields a higher score).
+\end{itemize}
+
+\subsection{Threats (External)}
+\begin{itemize}
+    \item \textbf{Costs and API Changes:} The project depends on an external provider (Groq/Llama). Future pricing changes or API deprecations would require code maintenance.
+    \item \textbf{Educational Risks regarding Data Accuracy:} Since the AI strictly respects the provided data, any medical errors in the "Ground Truth" (Excel files) would be propagated to students. Rigorous verification is mandatory.
+\end{itemize}
+
+\section{Future Work}
+
+\textbf{Short-term:}
+\begin{itemize}
+\item Expand to 30+ diseases for comprehensive coverage.
+\item Integrate radiological image database.
+\item Implement multilingual support (English, French).
+\end{itemize}
+
+\textbf{Long-term:}
+\begin{itemize}
+\item Collect real dental student-patient conversations for training.
+\item Add emotional modeling (patient anxiety, pain levels).
+\item Implement adaptive difficulty based on student proficiency.
+\item Conduct randomized controlled trials comparing learning outcomes.
+\item Integrate with virtual reality for immersive 3D experiences.
+\end{itemize}
+
+\section{Final Remarks}
+
+This project demonstrates that systematic model testing and hybrid AI architectures can create effective educational tools for healthcare training. The combination of conversational flexibility (LLMs) with structured clinical management (slot filling) enables realistic yet consistent patient simulation.
+
+Our rigorous testing methodology—evaluating multiple models before final selection—ensures that the system meets the specific requirements of medical education rather than relying on general-purpose model capabilities. The high performance across clinical accuracy, persona consistency, and linguistic realism validates this approach.
+
+As AI models continue to improve, systems like ours will become standard components of healthcare education, providing safe, scalable practice opportunities that complement traditional clinical training. The architecture and evaluation framework presented here offer a template for developing similar applications across medical specialties.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+
+\bibitem{cepdnaclk2022}
+University of Peradeniya, Department of Computer Engineering.
+\textit{Virtual Patient Simulator for Skill Training in Dentistry}.
+GitHub repository, 2022.
+
+\bibitem{suarez2022}
+Suarez, A. et al.
+\textit{AI-based Virtual Patient Chatbot for Dental Education}.
+Journal of Dental Education, 2022.
+
+\bibitem{or2024}
+Or, C. et al.
+\textit{Generative AI Chatbots for Patient History Taking in Dental Education: A Pilot Study}.
+Medical Education Technology, 2024.
+
+\bibitem{jones2025}
+Jones, T. et al.
+\textit{Constructivist Framework for AI Chatbots in Dental Education}.
+Journal of Educational Technology, 2025.
+
+\bibitem{llama}
+Meta AI.
+\textit{LLaMA: Open Foundation and Fine-Tuned Chat Models}.
+arXiv preprint, 2023.
+
+\bibitem{lora}
+Hu, E. J. et al.
+\textit{LoRA: Low-Rank Adaptation of Large Language Models}.
+ICLR, 2022.
+
+\end{thebibliography}
+
+\end{document}

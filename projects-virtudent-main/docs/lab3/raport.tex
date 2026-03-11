@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Lab3 MIRPR}
+\author{Emanuel Marcu}
+
+\begin{document}
+
+\maketitle
+
+\section{Descrierea setului real de date si scurta EDA}
+
+Setul de date folosit este compus din mai multe fisiere text, fiecare reprezentand o boala stomatologica (ex: abces parodontal, carie simpla, pericoronarita, pulpita etc.). 
+Fiecare fisier contine aproximativ 30 de conversatii intre Student si Pacient, in limbaj informal.
+
+\subsection*{Sinteza EDA}
+\begin{itemize}
+    \item conversatiile sunt separate prin ``CONVERSATIA X''
+    \item replicile sunt sub forma ``Student:'' si ``Pacient:''
+    \item limbajul pacientului este colocvial, natural si uneori incomplet
+    \item pe baza conversatiilor am extras manual setul de simptome pentru fiecare boala
+    \item simptomele extrase au devenit baza interna simptome $\rightarrow$ boala folosita la generarea prompturilor
+\end{itemize}
+
+
+\section{Metodologie experimentala}
+
+\subsection*{Etapele principale}
+\begin{itemize}
+    \item citirea fisierelor si extragerea replicilor Student/Pacient
+    \item conversia replicilor in format \textit{user/assistant}
+    \item generarea unui mesaj de sistem ce include:
+    \begin{itemize}
+        \item boala reala (doar intern pentru model)
+        \item lista simptomelor extrase manual pentru acea boala
+    \end{itemize}
+    \item formatarea conversatiilor cu \texttt{apply\_chat\_template}
+    \item tokenizare la maxim 2048 tokeni
+    \item folosirea tehnicii \textit{transfer learning} pentru specializarea modelelor pe datele noastre
+    \item finetuning separat pentru LLaMA si RoLLaMA
+\end{itemize}
+
+
+\section{Impartirea setului de date}
+
+\begin{itemize}
+    \item 90\% -- train
+    \item 10\% -- validation
+\end{itemize}
+
+Impartirea s-a facut la nivel de conversatii, cu seed fix.
+
+
+\section{Hiperparametri utilizati}
+
+\begin{itemize}
+    \item modele: LLaMA3.1-8B-Instruct, RoLLaMA3.1-8B-Instruct
+    \item LoRA: r=8, alpha=16, dropout=0.05
+    \item quantizare: 4-bit (nf4)
+    \item epoci: 2
+    \item batch size efectiv: 8
+    \item learning rate: 5e-5
+    \item scheduler: cosine
+    \item warmup ratio: 0.1
+    \item max sequence length: 2048
+    \item optimizer: paged AdamW 8-bit
+    \item gradient checkpointing: activat
+\end{itemize}
+
+
+\section{Rezultate obtinute}
+
+\subsection{Training loss LLaMA}
+\begin{itemize}
+    \item Step 10: 3.5843
+    \item Step 20: 0.8830
+    \item Step 30: 0.6452
+    \item Step 40: 0.5084
+    \item Step 50: 0.4188
+\end{itemize}
+
+\subsection{Training loss RoLLaMA}
+\begin{itemize}
+    \item Step 10: 2.2879
+    \item Step 20: 0.8347
+    \item Step 30: 0.6144
+    \item Step 40: 0.4872
+    \item Step 50: 0.3980
+\end{itemize}
+
+
+\subsection{Comportamentul modelelor}
+
+\textbf{RoLLaMA}
+\begin{itemize}
+    \item respecta mai strict regulile din prompt
+    \item pastreaza mai bine contextul conversatiei
+    \item ofera raspunsuri mai stabile
+    \item uneori limbajul este mai simplu si mai putin fluent fata de LLaMA
+\end{itemize}
+
+\textbf{LLaMA}
+\begin{itemize}
+    \item are un limbaj mult mai fluent si natural
+    \item suna mai ``frumos'' si mai apropiat de o conversatie reala
+    \item halucineaza mai usor
+    \item genereaza mai des raspunsuri incoerente sau amuzante (``perle'')
+\end{itemize}
+
+
+\subsection{Exemple corecte}
+
+\begin{itemize}
+    \item \textbf{Student:} ``Ce problema aveti?'' \\
+    \textbf{Pacient:} ``Ma doare gingia aici, in partea dreapta, mai ales cand ating zona.''
+    
+    \item \textbf{Student:} ``Aveti ceva umflatura?'' \\
+    \textbf{Pacient:} ``Da, am o umflatura mare peste maseaua de minte, pe partea stanga.''
+\end{itemize}
+
+
+\subsection{Exemple gresite (asa zisele perle)}
+
+\textbf{LLaMA:}
+\begin{itemize}
+    \item ``Am un dinte care pare mai inalt decat ceilalti si ma doare putin cand ma uit la el.''
+    \item ``Am durere gingie si nu pot sa ma asez in scaun fara sa doara.''
+\end{itemize}
+
+
+\textbf{RoLLaMA:}
+\begin{itemize}
+    \item \textbf{Student:} ``Ai simtit ceva lichid cu gust ciudat?'' \\
+    \textbf{Pacient:} ``Da, am gustat ceva lichid cu gust sarat, ca apa de gura, cand m-am spalat pe dinti.''
+\end{itemize}
+
+
+\end{document}

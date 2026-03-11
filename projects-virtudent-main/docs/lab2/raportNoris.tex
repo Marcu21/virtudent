@@ -1,0 +1,222 @@
+\section{Small Data and Intelligent Algorithm}
+
+\subsection{Description and Exploratory Data Analysis (EDA)}
+
+The dataset used for this project consists of approximately 225 simulated multi-turn dialogues between a dentist and a patient. Each conversation is annotated with:
+\begin{itemize}
+    \item the doctor's question,
+    \item the corresponding \textit{intent label} (e.g., \texttt{where\_location}, \texttt{duration}, \texttt{trigger}, \texttt{severity}, \texttt{extra}),
+    \item and the patient's underlying disease (e.g., \textit{pulpitis acute}, \textit{gingivitis}, \textit{periodontitis}).
+\end{itemize}
+
+The dataset was synthetically constructed based on realistic dental symptom descriptions collected from open-access resources such as PubMed and PMC. No personal or identifiable data were used, thus complying with GDPR and ethical data usage regulations.
+
+\subsubsection*{Dataset Summary}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Field} & \textbf{Description} \\
+\hline
+doctor\_question & Natural language question from the dentist \\
+turn\_intent & Intent label (type of information requested) \\
+disease\_label & Simulated condition of the patient \\
+patient\_answer & Generated answer for realism \\
+\hline
+\end{tabular}
+\end{center}
+
+Example records:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+doctor\_question & turn\_intent & disease \\
+\hline
+Where exactly does it hurt? & where\_location & pulpitis\_acute \\
+Since when do you feel this pain? & duration & pulpitis\_acute \\
+What makes the pain worse? & trigger & pulpitis\_acute \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent
+The dataset contains five main intent categories that are approximately balanced. Each question averages between 8 and 12 words, which is ideal for small-scale text classification experiments.
+
+---
+
+\subsection{Intelligent Algorithm Description}
+
+The proposed system is a hybrid AI pipeline composed of two main components:
+\begin{enumerate}
+    \item A \textbf{Machine Learning intent classifier} trained on the small dataset.
+    \item A \textbf{Large Language Model (LLM)} that generates conversational responses as a simulated dental patient.
+\end{enumerate}
+
+\subsubsection*{A. Intent Classification Model}
+
+\textbf{Goal:} Identify the intent of the dentist's question (e.g., duration, trigger, severity).
+
+\textbf{Algorithm:} TF-IDF vectorizer + Logistic Regression.
+
+\textbf{Libraries:} \texttt{scikit-learn}, \texttt{pandas}, \texttt{matplotlib}.
+
+\textbf{Motivation:}
+\begin{itemize}
+    \item Logistic Regression performs well on small datasets and provides interpretable coefficients.
+    \item TF-IDF captures key textual patterns such as ``when'' (duration) or ``where'' (location).
+    \item The model is simple, efficient, and robust against overfitting.
+\end{itemize}
+
+---
+
+\subsubsection*{B. Conversational LLM}
+
+\textbf{Model:} \texttt{mistralai/Mistral-7B-Instruct-v0.2}
+
+\textbf{Framework:} Hugging Face \texttt{transformers}.
+
+\textbf{Quantization:} 4-bit using \texttt{BitsAndBytesConfig} for memory-efficient inference on Colab T4 GPU.
+
+\textbf{Motivation:}
+\begin{itemize}
+    \item Mistral 7B is instruction-tuned and conversationally fluent.
+    \item Generates short, human-like answers without repeating the prompt.
+    \item Handles medical dialogue well, simulating realistic patient behavior.
+\end{itemize}
+
+---
+
+\subsection{Experimental Methodology and Results}
+
+\subsubsection*{Data Split}
+The dataset of 225 examples was divided as follows:
+\begin{itemize}
+    \item Training set: 80\% 
+    \item Validation/Test set: 20\%
+\end{itemize}
+
+\subsubsection*{Evaluation Metrics}
+For the intent classifier:
+\begin{itemize}
+    \item Precision, Recall, F1-score per class
+    \item Confusion Matrix visualization
+\end{itemize}
+
+\subsubsection*{Model Hyperparameters}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Parameter & Value \\
+\hline
+Vectorizer & TF-IDF \\
+C & 1.0 \\
+max\_iter & 1000 \\
+test\_size & 0.2 \\
+random\_state & 42 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Results}
+
+\begin{verbatim}
+Precision: 1
+Macro F1-score: 1
+Recall: 1
+\end{verbatim}
+
+Confusion matrix analysis showed minor overlap between the \texttt{trigger} and \texttt{extra} classes due to semantic similarity.
+
+
+\subsubsection*{Conversation Generation Results}
+
+After intent prediction, Mistral 7B generates patient responses such as:
+
+\begin{verbatim}
+Doctor: Where exactly does it hurt?
+Patient (where_location): I'm experiencing a sharp, constant pain in my tooth, especially when 
+I bite down or take hot or cold food or drinks. It's been getting worse over the past few days 
+and keeps me awake at night.
+
+Doctor: Since when do you feel this pain?
+Patient (duration): I've been experiencing intense tooth pain for the past few days. It hurts 
+when I apply pressure or eat something cold or hot. The pain keeps me up at night and I can't 
+focus on my daily activities due to the discomfort
+
+Doctor: What makes the pain worse?
+Patient (trigger): I feel a sharp, constant pain in my tooth when I take a bite or when I 
+expose it to cold or hot temperatures. The pain can be quite intense and makes it difficult 
+for me to chew on that side of my mouth.
+
+Doctor: How strong is the pain?
+Patient (severity): I'm experiencing intense pain in my tooth, especially when I bite down or
+take hot or cold food or drinks. The pain keeps me awake at night.
+
+Doctor: Is there anything else you noticed?
+Patient (extra): I've been experiencing intense tooth pain, especially when I chew or drink 
+something hot or cold. It feels like a sharp, throbbing sensation deep inside my tooth.
+Sometimes I even feel a constant ache that keeps me up at night.
+
+\end{verbatim}
+
+---
+
+\subsection{Diagnosis Evaluation Step}
+
+After the conversation, the student (doctor) proposes a diagnosis.  
+The LLM knows the true diagnosis from the prompt and compares the student's answer with the ground truth.
+
+\textbf{Example outputs:}
+\begin{verbatim}
+Correct diagnosis. The symptoms match acute pulpitis.
+Incorrect diagnosis. The pain sensitivity suggests pulpitis, not gingivitis.
+\end{verbatim}
+
+This step allows students to receive instant feedback on diagnostic accuracy.
+
+---
+
+\subsection{Discussion}
+
+\textbf{Performance summary:}
+\begin{itemize}
+    \item Mistral 7B produced natural, concise patient responses.
+    \item The model runs efficiently in 4-bit mode (~7GB VRAM) on Colab T4 GPU.
+\end{itemize}
+
+\textbf{Challenges:}
+\begin{itemize}
+    \item Smaller models (TinyLlama, Phi-2) often repeated instructions or added meta-text.
+    \item Maintaining long-term conversational context remains an open challenge.
+\end{itemize}
+
+\textbf{Future Work:}
+\begin{itemize}
+    \item Add conversation memory through summarization or embeddings.
+    \item Include multiple diseases for broader diagnostic practice.
+    \item Fine-tune Mistral on real annotated dental dialogues.
+\end{itemize}
+
+---
+
+\subsection{Conclusion}
+
+This project demonstrates a hybrid AI pipeline that integrates:
+\begin{itemize}
+    \item a \textbf{small-data intent classifier} for structured understanding, and
+    \item a \textbf{large instruction-tuned LLM (Mistral-7B)} for natural dialogue generation.
+\end{itemize}
+
+The resulting system can simulate realistic patient interactions, provide immediate diagnostic feedback, and serve as a valuable training tool for dental students. The combination of explainable ML and generative AI achieves both interpretability and conversational realism within limited computational resources.
+
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+
+
+
+
+
+\setstretch{1.5}
+\end{document}
